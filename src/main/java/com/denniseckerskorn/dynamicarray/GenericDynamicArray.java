@@ -1,5 +1,5 @@
 
-package com.denniseckerskorn.tema07pilascolas.dynamicarray;
+package com.denniseckerskorn.dynamicarray;
 
 
 import java.util.Arrays;
