@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 public class Ejer04 {
     public Ejer04() {
-        int[] numbers = new int[5];
-        readNumbersIntoArray("Please introduce a number", numbers);
+        //int[] numbers = new int[5];
+        //readNumbersIntoArray("Please introduce a number", numbers);
 
         int[] numbersNull = null;
 
