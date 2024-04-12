@@ -1,9 +1,7 @@
 package com.denniseckerskorn.ejerciciosexcepciones.ejer05;
 
-import com.denniseckerskorn.ejerciciosexcepciones.Ejer04;
-
+import com.denniseckerskorn.lib.LibIO;
 import java.util.Arrays;
-import java.util.Scanner;
 
 public class Ejer05 {
     private Alumno[] alumnos;
@@ -17,23 +15,13 @@ public class Ejer05 {
     }
 
     public void solicitarDatosAlumno(Alumno[] alumnos) {
-        Scanner lector = new Scanner(System.in);
         for (int i = 0; i < alumnos.length; i++) {
-            System.out.println("Introduce el nombre:");
-            String nombre = lector.nextLine();
-            try {
-                System.out.println("Introduce tu edad:");
-                int edad = Integer.parseInt(lector.nextLine());
-                System.out.println("Introduce tu altura:");
-                float altura = Float.parseFloat(lector.nextLine());
-                Alumno alumno = new Alumno(nombre, edad, altura);
-                alumnos[i] = alumno;
-            } catch (NumberFormatException nfe) {
-                System.out.println("Solo se pueden ingresar números: ");
-            }
-
+            String nombre = LibIO.requestString("Introduce el nombre", 3, 20);
+            int edad = LibIO.requestInt("Introduce tu edad", 1, 50);
+            float altura = LibIO.requestFloat("Introduce tu altura:");
+            Alumno alumno = new Alumno(nombre, edad, altura);
+            alumnos[i] = alumno;
         }
-        lector.close();
     }
 
     public int getEdadMax() {
