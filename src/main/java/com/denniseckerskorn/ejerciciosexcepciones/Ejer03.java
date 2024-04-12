@@ -15,7 +15,6 @@ public class Ejer03 {
                 double maxValue = 0;
                 maxValue = data.getMaxValue();
                 System.out.println("Max Value: " + maxValue);
-
             } else {
                 System.out.println("No numbers were provided");
             }
@@ -25,11 +24,10 @@ public class Ejer03 {
         }
     }
 
-
     public void requestNumbersIntoArray(String message) {
         Scanner lector = new Scanner(System.in);
         boolean exit = false;
-        data = new GenericDynamicArray<>();
+        data = new GenericDynamicArray<>(); //Inicializar array fuera del metodo.
         double input = 0;
 
         do {
