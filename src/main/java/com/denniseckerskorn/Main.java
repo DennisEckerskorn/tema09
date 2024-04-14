@@ -11,7 +11,8 @@ public class Main {
         //Ejer04 ejer04 = new Ejer04();
         //Ejer05 ejer05 = new Ejer05();
         //Ejer06 ejer06 = new Ejer06();
-        Ejer07 ejer07 = new Ejer07();
+        //Ejer07 ejer07 = new Ejer07();
+        Ejer08 ejer08 = new Ejer08();
 
     }
 }
