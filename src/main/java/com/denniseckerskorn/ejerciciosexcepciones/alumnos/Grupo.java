@@ -67,11 +67,17 @@ public class Grupo {
     }
 
     public Alumno buscarAlumnoPorNia(int nia) {
-        int posicion = buscarPosicionAlumnoPorNia(nia);
-        if (posicion >= 0) {
-            return alumnos[posicion];
+        try {
+            int posicion = buscarPosicionAlumnoPorNia(nia);
+            if (posicion >= 0) {
+                return alumnos[posicion];
+            }
+            return null;
+        } catch (ArrayIndexOutOfBoundsException aioobe) {
+            System.out.println("Error al buscar al Alumno" + aioobe.getMessage());
+            return null;
         }
-        return null;
+
     }
 
     public int buscarPosicionAlumnoPorNia(int nia) {
