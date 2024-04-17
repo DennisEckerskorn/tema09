@@ -47,8 +47,8 @@ public class IOCalc {
                         break;
                     case 4:
                         System.out.println("Multiplicacion");
-                        double resultadoMultiplicación = calculadora.multiplicacion(numeroUno, numeroDos);
-                        System.out.println(numeroUno + " * " + numeroDos + " = " + resultadoMultiplicación);
+                        double resultadoMultiplicacion = calculadora.multiplicacion(numeroUno, numeroDos);
+                        System.out.println(numeroUno + " * " + numeroDos + " = " + resultadoMultiplicacion);
                         break;
                     case 5:
                         System.out.println("Resto de División");

@@ -1,32 +1,39 @@
 package com.denniseckerskorn.lib;
 
+import java.awt.font.NumericShaper;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 //Library which includes general methods for INPUT/OUTPUT.
 public class LibIO {
-    private static Scanner lector = new Scanner(System.in);
+    private static final Scanner LECTOR = new Scanner(System.in);
 
 
     // **** METHODS TO READ USER INPUT WITH SCANNER FOR DIFFERENT DATA TYPES, NO VALIDATION: ****
 
     /**
-     * Method which receives a String as message and validates if the user input is equal to "true" or "false"
+     * Method which prompts the user with a message and validates if the user input is equal to "true" or "false".
      *
-     * @param message String
-     * @return boolean true or false.
+     * @param message The message displayed to the user for input.
+     * @return True if the user input is "true", false if it's "false".
      */
     public static boolean validateBoolean(String message) {
-        boolean valid;
-        String result;
+        boolean valid = false;
+        String result = "";
         do {
             System.out.println(message);
-            result = lector.nextLine().trim().toLowerCase();
-            valid = result.equals("true") || result.equals("false");
-            if (!valid) {
-                System.out.println("Error, only true or false");
+            try{
+                result = LECTOR.nextLine().trim().toLowerCase();
+                valid = result.equals("true") || result.equals("false");
+                if (!valid) {
+                    System.out.println("Error, only true or false");
+                }
+
+            }catch(NoSuchElementException nee) {
+                System.out.println("There is no input, please introduce 'true' or 'false'");
             }
         } while (!valid);
         return Boolean.parseBoolean(result);
@@ -39,14 +46,18 @@ public class LibIO {
      * @return boolean true or false.
      */
     public static boolean validateYesNo(String message) {
-        boolean valid;
-        String result;
+        boolean valid = false;
+        String result = "";
         do {
             System.out.println(message);
-            result = lector.nextLine().trim().toLowerCase();
-            valid = result.equals("si") || result.equals("no");
-            if (!valid) {
-                System.out.println("Error, solo si o no son permitidos");
+            try{
+                result = LECTOR.nextLine().trim().toLowerCase();
+                valid = result.equals("si") || result.equals("no");
+                if (!valid) {
+                    System.out.println("Error, solo 'si' o 'no' son permitidos");
+                }
+            }catch (NoSuchElementException nsee) {
+                System.out.println("No hay entrada. Introduce un si o no");
             }
         } while (!valid);
         return result.equals("si");
@@ -60,7 +71,7 @@ public class LibIO {
      */
     public static byte requestByte(String message) {
         System.out.println(message);
-        return Byte.parseByte(lector.nextLine());
+        return Byte.parseByte(LECTOR.nextLine());
     }
 
     /**
@@ -71,7 +82,7 @@ public class LibIO {
      */
     public static int requestInt(String message) {
         System.out.println(message);
-        return Integer.parseInt(lector.nextLine());
+        return Integer.parseInt(LECTOR.nextLine());
     }
 
     /**
@@ -82,7 +93,7 @@ public class LibIO {
      */
     public static long requestLong(String message) {
         System.out.println(message);
-        return Long.parseLong(lector.nextLine());
+        return Long.parseLong(LECTOR.nextLine());
     }
 
     /**
@@ -93,7 +104,7 @@ public class LibIO {
      */
     public static float requestFloat(String message) {
         System.out.println(message);
-        return Float.parseFloat(lector.nextLine());
+        return Float.parseFloat(LECTOR.nextLine());
     }
 
     /**
@@ -104,7 +115,7 @@ public class LibIO {
      */
     public static double requestDouble(String message) {
         System.out.println(message);
-        return Double.parseDouble(lector.nextLine());
+        return Double.parseDouble(LECTOR.nextLine());
     }
 
     /**
@@ -115,7 +126,7 @@ public class LibIO {
      */
     public static char requestChar(String message) {
         System.out.println(message);
-        return lector.nextLine().charAt(0);
+        return LECTOR.nextLine().charAt(0);
     }
 
     /**
@@ -126,7 +137,7 @@ public class LibIO {
      */
     public static String requestString(String message) {
         System.out.println(message);
-        return lector.nextLine();
+        return LECTOR.nextLine();
     }
 
 
@@ -142,14 +153,18 @@ public class LibIO {
      * @return byte introduced by user and validated.
      */
     public static byte requestByte(String message, byte min, byte max) {
-        boolean valid;
-        byte result;
+        boolean valid = false;
+        byte result = -1;
         do {
             System.out.println(message);
-            result = Byte.parseByte(lector.nextLine());
-            valid = (result >= min && result <= max);
-            if (!valid) {
-                System.out.printf("Error => Minimum Value: %d, Maximum Value: %d\n", min, max);
+            try {
+                result = Byte.parseByte(LECTOR.nextLine());
+                valid = (result >= min && result <= max);
+                if (!valid) {
+                    System.out.printf("Error => Minimum Value: %d, Maximum Value: %d\n", min, max);
+                }
+            } catch (NumberFormatException nfe) {
+                System.out.println("Error => Only numbers can be entered");
             }
         } while (!valid);
         return result;
@@ -169,7 +184,7 @@ public class LibIO {
         do {
             System.out.println(message);
             try {
-                result = Integer.parseInt(lector.nextLine());
+                result = Integer.parseInt(LECTOR.nextLine());
                 valid = (result >= min && result <= max);
                 if (!valid) {
                     System.out.printf("Error => Minimum Value: %d, Maximum Value: %d\n", min, max);
@@ -190,14 +205,18 @@ public class LibIO {
      * @return long introduced by user and validated.
      */
     public static long requestLong(String message, long min, long max) {
-        boolean valid;
-        long result;
+        boolean valid = false;
+        long result = -1;
         do {
             System.out.println(message);
-            result = Long.parseLong(lector.nextLine());
-            valid = (result >= min && result <= max);
-            if (!valid) {
-                System.out.printf("Error => Minimum Value: %d, Maximum Value: %d\n", min, max);
+            try {
+                result = Long.parseLong(LECTOR.nextLine());
+                valid = (result >= min && result <= max);
+                if (!valid) {
+                    System.out.printf("Error => Minimum Value: %d, Maximum Value: %d\n", min, max);
+                }
+            } catch (NumberFormatException nfe) {
+                System.out.println("Error => Only numbers can be entered");
             }
         } while (!valid);
         return result;
@@ -217,7 +236,7 @@ public class LibIO {
         do {
             try {
                 System.out.println(message);
-                result = Float.parseFloat(lector.nextLine());
+                result = Float.parseFloat(LECTOR.nextLine());
                 valid = (result >= min && result <= max);
                 if (!valid) {
                     System.out.printf("Error => Minimum Value: %.2f, Maximum Value: %.2f\n", min, max);
@@ -238,14 +257,18 @@ public class LibIO {
      * @return double introduced by user and validated.
      */
     public static double requestDouble(String message, double min, double max) {
-        boolean valid;
-        double result;
+        boolean valid = false;
+        double result = Double.NEGATIVE_INFINITY;
         do {
             System.out.println(message);
-            result = Double.parseDouble(lector.nextLine());
-            valid = (result >= min && result <= max);
-            if (!valid) {
-                System.out.printf("Error => Minimum Value: %.2f, Maximum Value: %.2f\n", min, max);
+            try {
+                result = Double.parseDouble(LECTOR.nextLine());
+                valid = (result >= min && result <= max);
+                if (!valid) {
+                    System.out.printf("Error => Minimum Value: %.2f, Maximum Value: %.2f\n", min, max);
+                }
+            } catch (NumberFormatException nfe) {
+                System.out.println("Error => Only numbers can be entered");
             }
         } while (!valid);
         return result;
@@ -261,14 +284,18 @@ public class LibIO {
      * @return validated character which was introduced by user.
      */
     public static char requestChar(String message, char c) {
-        char result;
-        boolean valid;
+        char result = ' ';
+        boolean valid = false;
         do {
             System.out.println(message);
-            result = lector.nextLine().toLowerCase().charAt(0);
-            valid = result == Character.toLowerCase(c);
-            if (!valid) {
-                System.out.printf("The character should be %c\n", c);
+            try {
+                result = LECTOR.nextLine().toLowerCase().charAt(0);
+                valid = result == Character.toLowerCase(c);
+                if (!valid) {
+                    System.out.printf("The character should be %c\n", c);
+                }
+            } catch (NoSuchElementException nsee) {
+                System.out.println("No input was provided. Please enter a character.");
             }
         } while (!valid);
         return result;
@@ -285,14 +312,18 @@ public class LibIO {
      * @return validated character which was introduced by user.
      */
     public static char requestChar(String message, char c1, char c2) {
-        char result;
-        boolean valid;
+        char result = ' ';
+        boolean valid = false;
         do {
             System.out.println(message);
-            result = lector.nextLine().toLowerCase().charAt(0);
-            valid = (c1 + "" + c2).toLowerCase().indexOf(result) != -1;
-            if (!valid) {
-                System.out.printf("Error => El carácter debe ser %c o %c\n", c1, c2);
+            try {
+                result = LECTOR.nextLine().toLowerCase().charAt(0);
+                valid = (c1 + "" + c2).toLowerCase().indexOf(result) != -1;
+                if (!valid) {
+                    System.out.printf("Error => El carácter debe ser %c o %c\n", c1, c2);
+                }
+            } catch (NoSuchElementException nsee) {
+                System.out.println("No input was provided. Please enter a character.");
             }
         } while (!valid);
         return result;
@@ -307,42 +338,83 @@ public class LibIO {
      * @return String introduced by the user.
      */
     public static String requestString(String message, int min, int max) {
-        boolean valid;
-        String result;
+        boolean valid = false;
+        String result = "";
         do {
             System.out.println(message);
-            result = lector.nextLine();
-            valid = result.length() >= min && result.length() <= max;
-            if (!valid) {
-                System.out.printf("Error => Minimum length: %d, Maximum length: %d\n", min, max);
+            try {
+                result = LECTOR.nextLine();
+                valid = result.length() >= min && result.length() <= max;
+                if (!valid) {
+                    System.out.printf("Error => Minimum length: %d, Maximum length: %d\n", min, max);
+                }
+            } catch (NoSuchElementException nsee) {
+                System.out.println("No input was provided. Please enter a character.");
             }
         } while (!valid);
         return result;
     }
 
     /**
-     * Método que recibe un mensaje y el formato a seguir para la fecha, una vez tenga los parámetros se validan.
+     * Solicita al usuario ingresar una fecha utilizando el mensaje proporcionado y el formato especificado por SimpleDateFormat(dd/MM/yyyy).
      *
-     * @param mensaje
-     * @param format
-     * @return
+     * @param mensaje El mensaje que se muestra al usuario para solicitar la fecha.
+     * @param format  El formato que se utilizará para parsear la fecha.
+     * @return La fecha ingresada por el usuario.
+     * @throws RuntimeException Si ocurre un error al parsear la fecha o si la entrada no es una fecha válida.
      */
     public static Date solicitarFechaDate(String mensaje, SimpleDateFormat format) { //Añadir fecha minima y fecha maxima o periodo...
-        boolean valido;
+        boolean valido = false;
         Date fecha = null;
         do {
             System.out.println(mensaje);
-            String fechaStr = lector.nextLine();
-            try { //obligatorio, si no, no nos deja seguir...
+            String fechaStr = LECTOR.nextLine();
+            try {
                 fecha = format.parse(fechaStr);
-            } catch (ParseException e) {
-                throw new RuntimeException(e);
-            }
-            valido = fecha != null;
-            if (!valido) {
-                System.out.println("El formato de la fecha no es válido");
+                valido = fecha != null;
+                if (!valido) {
+                    System.out.println("El formato de la fecha no es válido");
+                }
+            } catch (ParseException pe) {
+                System.out.println("La entrada no es válida");
             }
         } while (!valido);
+        return fecha;
+    }
+
+    /**
+     * Solicita al usuario ingresar una fecha dentro de un rango específico, utilizando el mensaje proporcionado y el formato especificado por SimpleDateFormat(dd/MM/yyyy).
+     * minDate y maxDate se pasan como en el siguiente ejemplo:
+     * Date minDate = null;
+     *  try{
+     *      minDate = sdf.parse(date);
+     *  }catch(ParseException e) {
+     *  }
+     *
+     * @param mensaje  El mensaje que se muestra al usuario para solicitar la fecha.
+     * @param format   El formato que se utilizará para parsear la fecha.
+     * @param minDate  La fecha mínima permitida para ingresar (inclusive). Puede ser null si no hay una fecha mínima específica.
+     * @param maxDate  La fecha máxima permitida para ingresar (inclusive). Puede ser null si no hay una fecha máxima específica.
+     * @return La fecha ingresada por el usuario dentro del rango especificado.
+     * @throws RuntimeException Si ocurre un error al parsear la fecha o si la entrada no es una fecha válida.
+     */
+    public static Date solicitarFechaDate(String mensaje, SimpleDateFormat format, Date minDate, Date maxDate) {
+        boolean valid = false;
+        Date fecha = null;
+        do {
+            System.out.println(mensaje);
+            String fechaStr = LECTOR.nextLine();
+            try {
+                fecha = format.parse(fechaStr);
+                if (minDate == null || !fecha.before(minDate) && maxDate == null || !fecha.after(maxDate)) {
+                    valid = true;
+                } else {
+                    System.out.println("La fecha no está dentro del rango");
+                }
+            } catch (ParseException pe) {
+                System.out.println("El formato de la fecha no es válida");
+            }
+        } while (!valid);
         return fecha;
     }
 }
